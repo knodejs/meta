@@ -33,7 +33,7 @@
 %%%
 -type form() :: erl_parse:abstract_form().
 -type forms() :: form() | [form()].
--type vars() :: gb_set().
+-type vars() :: gb_set:gb_set().
 
 -type quote(Form) :: fun((vars()) -> Form).
 
@@ -97,13 +97,13 @@
         {info :: info(),
          level :: integer(),
          vars = dict:new(),
-         refs :: dict(),
+         refs :: dict:dict(),
          splices = []}).
 
 -record(s_info,
         {info :: info(),
          level :: integer(),
-         refs :: dict(),
+         refs :: dict:dict(),
          splices = []}).
 
 %%%
@@ -317,8 +317,8 @@ local_apply(FunName, Args, Info) ->
 -spec hygienize_var(VarName, Vars, VarMaps) ->
                            {VarName, Vars, VarMaps} when
       VarName :: string(),
-      Vars :: gb_set(),
-      VarMaps :: dict().
+      Vars :: gb_set:gb_set(),
+      VarMaps :: dict:dict().
 hygienize_var('_', Vars, Maps) ->
     {'_', Vars, Maps};
 hygienize_var(VarName, Vars, Maps) ->
